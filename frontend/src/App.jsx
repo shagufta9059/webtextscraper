@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import "./App.css";
 
-const REQUEST_TIMEOUT = 3000;
+const REQUEST_TIMEOUT = 60000;
 
 function App() {
   const [url, setUrl] = useState("");
@@ -90,7 +90,7 @@ function App() {
         err.name === "AbortError"
       ) {
         setError(
-          "This website took more than 5 seconds. Please try again or use another URL."
+          "This request took too long. Please try again."
         );
       } else {
         setError(err.message || "Something went wrong.");
@@ -253,7 +253,9 @@ function App() {
               <div className="empty-state">
                 <div className="spinner" />
                 <h3>Extracting your text...</h3>
-                <p>Processing your request (up to 5 seconds).</p>
+                <p>
+                  Processing your request (up to 60 seconds).
+                </p>
               </div>
             ) : result ? (
               <div className="text-content">
