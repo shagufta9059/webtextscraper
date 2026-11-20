@@ -14,6 +14,10 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = {
+        "http://localhost:5173",
+        "https://webtextscraper-frontend.onrender.com"
+})
 public class WebScrapeController {
 
     private final WebScrapeService webScrapeService;
@@ -38,7 +42,9 @@ public class WebScrapeController {
         boolean acquired = false;
 
         try {
-            acquired = requestLimiter.tryAcquire(100, TimeUnit.MILLISECONDS);
+            acquired = requestLimiter.tryAcquire(
+                    100, TimeUnit.MILLISECONDS
+            );
 
             if (!acquired) {
                 return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS)

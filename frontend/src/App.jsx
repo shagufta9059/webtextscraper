@@ -3,6 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import "./App.css";
 
 const REQUEST_TIMEOUT = 60000;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 function App() {
   const [url, setUrl] = useState("");
@@ -52,7 +53,7 @@ function App() {
     }, REQUEST_TIMEOUT);
 
     try {
-      const response = await fetch("/api/scrape", {
+      const response = await fetch(`${API_BASE_URL}/api/scrape`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
