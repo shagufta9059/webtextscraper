@@ -1,3 +1,5 @@
+Website link deployed: https://webtextscraper-frontend.onrender.com/
+
 # WebTextScraper
 
 ## 1. Project Overview
