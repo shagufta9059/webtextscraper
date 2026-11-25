@@ -1,7 +1,7 @@
 # WebTextScraper — Full-Stack Web Content Extraction Service
 
-**Live Demo:** https://webtextscraper-frontend.onrender.com/  
-**GitHub (Backend / Frontend):** https://webtextscraper-frontend.onrender.com/
+**Live Website link:** https://webtextscraper-frontend.onrender.com/  
+**GitHub (Backend / Frontend):** [https://webtextscraper-frontend.onrender.com/](https://github.com/shagufta9059/webtextscraper)
 
 ## Overview
 WebTextScraper is a full-stack web application built with **React** and **Spring Boot** that extracts, cleans, and structures readable article text from public URLs in real time.
