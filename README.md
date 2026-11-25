@@ -1,4 +1,4 @@
-# WebTextScraper — Full-Stack Web Content Extraction Service
+# WebTextScraper - Full-Stack Web Content Extraction Service
 
 **Live Website link:** https://webtextscraper-frontend.onrender.com/  
 **GitHub (Backend / Frontend):** [https://webtextscraper-frontend.onrender.com/](https://github.com/shagufta9059/webtextscraper)
