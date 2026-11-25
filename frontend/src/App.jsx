@@ -17,15 +17,15 @@ function App() {
   const copyTimerRef = useRef(null);
 
   useEffect(() => {
+    fetch(`${API_BASE_URL}/api/health`)
+      .catch(() => {});
 
-      fetch(`${API_BASE_URL}/api/health`)
-          .catch(() => {});
-
-      return () => {
-          requestRef.current?.abort();
-          clearTimeout(copyTimerRef.current);
-      };
+    return () => {
+      requestRef.current?.abort();
+      clearTimeout(copyTimerRef.current);
+    };
   }, []);
+
   async function extractText(event) {
     event.preventDefault();
 
@@ -87,6 +87,7 @@ function App() {
       }
 
       setResult(data);
+
     } catch (err) {
       if (
         controller.signal.aborted ||
@@ -118,6 +119,7 @@ function App() {
       copyTimerRef.current = setTimeout(() => {
         setCopied(false);
       }, 2000);
+
     } catch {
       setError("Could not copy text to clipboard.");
     }
@@ -125,6 +127,7 @@ function App() {
 
   function focusInput() {
     inputRef.current?.focus();
+
     inputRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "center",
@@ -133,8 +136,10 @@ function App() {
 
   return (
     <div className="site">
+
       <header className="navbar">
         <div className="nav-container">
+
           <a className="brand" href="#home">
             <span className="brand-mark">W</span>
             <span>WebTextScraper</span>
@@ -143,7 +148,7 @@ function App() {
           <nav className="nav-links">
             <a href="#features">Features</a>
             <a href="#how-it-works">How it Works</a>
-            <a href="#tech-stack">Tech Stack</a>
+            <a href="#developer">Developer</a>
           </nav>
 
           <button
@@ -153,24 +158,47 @@ function App() {
           >
             Get Started
           </button>
+
         </div>
       </header>
 
       <main id="home">
+
         <div className="hero">
+
+          {/* URL to Text icon */}
           <div className="hero-icon">
             <svg
-              width="46"
+              width="80"
               height="46"
-              viewBox="0 0 24 24"
+              viewBox="0 0 80 46"
               fill="none"
               stroke="currentColor"
-              strokeWidth="1.8"
+              strokeWidth="2.5"
               strokeLinecap="round"
               strokeLinejoin="round"
+              role="img"
+              aria-label="URL to Text"
             >
-              <rect x="5" y="2" width="14" height="20" rx="2" />
-              <path d="M9 8h6M9 12h6M9 16h4" />
+              {/* Link icon */}
+              <g transform="translate(0, 11)">
+                <path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                <path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+              </g>
+
+              {/* Arrow */}
+              <path d="M30 23h16M40 17l6 6-6 6" />
+
+              {/* Document icon */}
+              <rect
+                x="54"
+                y="8"
+                width="22"
+                height="30"
+                rx="3"
+              />
+
+              <path d="M60 16h10M60 23h10M60 30h7" />
             </svg>
           </div>
 
@@ -180,8 +208,8 @@ function App() {
           </h1>
 
           <p className="hero-description">
-            Turn any public webpage into clean, readable text —
-            fast, simple, and distraction-free.
+            Turn public webpages into clean, readable text.
+            Fast, simple and distraction-free.
           </p>
 
           <form
@@ -190,6 +218,7 @@ function App() {
             id="extract"
           >
             <div className="url-field">
+
               <svg
                 width="22"
                 height="22"
@@ -213,6 +242,7 @@ function App() {
                 required
                 aria-label="Website URL"
               />
+
             </div>
 
             <button
@@ -223,6 +253,7 @@ function App() {
               {loading ? "Extracting..." : "Extract Text"}
               {!loading && <span aria-hidden="true">→</span>}
             </button>
+
           </form>
 
           {error && (
@@ -230,10 +261,13 @@ function App() {
               {error}
             </p>
           )}
+
         </div>
 
         <section className="result-card" aria-live="polite">
+
           <div className="result-topbar">
+
             <div className="result-heading">
               <span className="result-icon">▤</span>
               <h2>Extracted Text</h2>
@@ -248,38 +282,53 @@ function App() {
               <span aria-hidden="true">
                 {copied ? "✓" : "▢"}
               </span>
+
               {copied ? "Copied!" : "Copy Text"}
             </button>
+
           </div>
 
           <div className="result-body">
+
             {loading ? (
               <div className="empty-state">
                 <div className="spinner" />
+
                 <h3>Extracting your text...</h3>
+
                 <p>
                   Processing your request (up to 60 seconds).
                 </p>
               </div>
+
             ) : result ? (
+
               <div className="text-content">
                 <h3>{result.title || "Webpage content"}</h3>
                 <p>{result.text || "No readable text found."}</p>
               </div>
+
             ) : (
+
               <div className="empty-state">
                 <div className="empty-document">▤</div>
+
                 <h3>Your extracted text will appear here.</h3>
+
                 <p>
                   Enter a URL above and click Extract Text
                   to get started.
                 </p>
               </div>
+
             )}
+
           </div>
+
         </section>
 
         <section className="features" id="features">
+
           <div className="feature">
             <span className="feature-icon fast-icon">ϟ</span>
             <div>
@@ -303,19 +352,40 @@ function App() {
               <p>Save the text instantly.</p>
             </div>
           </div>
+
         </section>
 
         <section className="info-section" id="how-it-works">
+
           <h2>How it Works</h2>
+
           <p>
             Paste a public webpage URL, press Enter or click
             Extract Text, then copy the result.
           </p>
+
         </section>
 
-        <footer id="tech-stack">
-          Built with React and Spring Boot
+        {/* Developer credit */}
+        <footer id="developer">
+
+          Built by{" "}
+
+          <a
+            href="https://github.com/shagufta9059/webtextscraper"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "#0066ff",
+              fontWeight: 600,
+              textDecoration: "none",
+            }}
+          >
+            Shagufta
+          </a>
+
         </footer>
+
       </main>
     </div>
   );
