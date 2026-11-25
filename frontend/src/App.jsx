@@ -17,12 +17,15 @@ function App() {
   const copyTimerRef = useRef(null);
 
   useEffect(() => {
-    return () => {
-      requestRef.current?.abort();
-      clearTimeout(copyTimerRef.current);
-    };
-  }, []);
 
+      fetch(`${API_BASE_URL}/api/health`)
+          .catch(() => {});
+
+      return () => {
+          requestRef.current?.abort();
+          clearTimeout(copyTimerRef.current);
+      };
+  }, []);
   async function extractText(event) {
     event.preventDefault();
 

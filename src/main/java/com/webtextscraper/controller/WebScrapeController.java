@@ -1,4 +1,3 @@
-
 package com.webtextscraper.controller;
 
 import com.webtextscraper.model.ScrapeRequest;
@@ -22,11 +21,17 @@ public class WebScrapeController {
 
     private final WebScrapeService webScrapeService;
 
-    // Limit simultaneous scraping requests
+    // Allow only 3 simultaneous scraping requests
     private final Semaphore requestLimiter = new Semaphore(3);
 
     public WebScrapeController(WebScrapeService webScrapeService) {
         this.webScrapeService = webScrapeService;
+    }
+
+    // Wake up the backend
+    @GetMapping("/health")
+    public String health() {
+        return "OK";
     }
 
     @PostMapping("/scrape")
@@ -34,9 +39,9 @@ public class WebScrapeController {
 
         if (request == null || request.getUrl() == null ||
                 request.getUrl().isBlank()) {
-            return ResponseEntity.badRequest().body(
-                    Map.of("error", "Please enter a website URL.")
-            );
+
+            return ResponseEntity.badRequest()
+                    .body(Map.of("error", "Please enter a website URL."));
         }
 
         boolean acquired = false;
@@ -53,23 +58,31 @@ public class WebScrapeController {
             }
 
             ScrapeResult result = webScrapeService.scrape(request.getUrl());
+
             return ResponseEntity.ok(result);
 
         } catch (InterruptedException e) {
+
             Thread.currentThread().interrupt();
+
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE)
                     .body(Map.of("error", "Request interrupted."));
 
         } catch (IllegalArgumentException e) {
+
             return ResponseEntity.badRequest()
                     .body(Map.of("error", e.getMessage()));
 
         } catch (Exception e) {
+
+            System.out.println("Scraping error: " + e.getMessage());
+
             return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                     .body(Map.of("error",
                             "Unable to extract text from this website."));
 
         } finally {
+
             if (acquired) {
                 requestLimiter.release();
             }
